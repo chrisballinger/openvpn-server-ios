@@ -1,0 +1,304 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D9F187501826F67800FE27F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F1874F1826F67800FE27F1 /* Foundation.framework */; };
+		D9F187521826F67800FE27F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187511826F67800FE27F1 /* CoreGraphics.framework */; };
+		D9F187541826F67800FE27F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187531826F67800FE27F1 /* UIKit.framework */; };
+		D9F1875A1826F67800FE27F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9F187581826F67800FE27F1 /* InfoPlist.strings */; };
+		D9F1875C1826F67800FE27F1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F1875B1826F67800FE27F1 /* main.m */; };
+		D9F187601826F67800FE27F1 /* VPNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F1875F1826F67800FE27F1 /* VPNAppDelegate.m */; };
+		D9F187621826F67800FE27F1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9F187611826F67800FE27F1 /* Images.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D9F1874C1826F67800FE27F1 /* openvpn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openvpn.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9F1874F1826F67800FE27F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D9F187511826F67800FE27F1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D9F187531826F67800FE27F1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D9F187571826F67800FE27F1 /* openvpn-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "openvpn-Info.plist"; sourceTree = "<group>"; };
+		D9F187591826F67800FE27F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D9F1875B1826F67800FE27F1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D9F1875D1826F67800FE27F1 /* openvpn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "openvpn-Prefix.pch"; sourceTree = "<group>"; };
+		D9F1875E1826F67800FE27F1 /* VPNAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPNAppDelegate.h; sourceTree = "<group>"; };
+		D9F1875F1826F67800FE27F1 /* VPNAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VPNAppDelegate.m; sourceTree = "<group>"; };
+		D9F187611826F67800FE27F1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D9F187681826F67800FE27F1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D9F187491826F67800FE27F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9F187521826F67800FE27F1 /* CoreGraphics.framework in Frameworks */,
+				D9F187541826F67800FE27F1 /* UIKit.framework in Frameworks */,
+				D9F187501826F67800FE27F1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D9F187431826F67800FE27F1 = {
+			isa = PBXGroup;
+			children = (
+				D9F187551826F67800FE27F1 /* openvpn */,
+				D9F1874E1826F67800FE27F1 /* Frameworks */,
+				D9F1874D1826F67800FE27F1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D9F1874D1826F67800FE27F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D9F1874C1826F67800FE27F1 /* openvpn.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D9F1874E1826F67800FE27F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9F1874F1826F67800FE27F1 /* Foundation.framework */,
+				D9F187511826F67800FE27F1 /* CoreGraphics.framework */,
+				D9F187531826F67800FE27F1 /* UIKit.framework */,
+				D9F187681826F67800FE27F1 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D9F187551826F67800FE27F1 /* openvpn */ = {
+			isa = PBXGroup;
+			children = (
+				D9F1875E1826F67800FE27F1 /* VPNAppDelegate.h */,
+				D9F1875F1826F67800FE27F1 /* VPNAppDelegate.m */,
+				D9F187611826F67800FE27F1 /* Images.xcassets */,
+				D9F187561826F67800FE27F1 /* Supporting Files */,
+			);
+			path = openvpn;
+			sourceTree = "<group>";
+		};
+		D9F187561826F67800FE27F1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D9F187571826F67800FE27F1 /* openvpn-Info.plist */,
+				D9F187581826F67800FE27F1 /* InfoPlist.strings */,
+				D9F1875B1826F67800FE27F1 /* main.m */,
+				D9F1875D1826F67800FE27F1 /* openvpn-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D9F1874B1826F67800FE27F1 /* openvpn */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9F187781826F67800FE27F1 /* Build configuration list for PBXNativeTarget "openvpn" */;
+			buildPhases = (
+				D9F187481826F67800FE27F1 /* Sources */,
+				D9F187491826F67800FE27F1 /* Frameworks */,
+				D9F1874A1826F67800FE27F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = openvpn;
+			productName = openvpn;
+			productReference = D9F1874C1826F67800FE27F1 /* openvpn.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D9F187441826F67800FE27F1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = VPN;
+				LastUpgradeCheck = 0500;
+			};
+			buildConfigurationList = D9F187471826F67800FE27F1 /* Build configuration list for PBXProject "openvpn" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D9F187431826F67800FE27F1;
+			productRefGroup = D9F1874D1826F67800FE27F1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D9F1874B1826F67800FE27F1 /* openvpn */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D9F1874A1826F67800FE27F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9F1875A1826F67800FE27F1 /* InfoPlist.strings in Resources */,
+				D9F187621826F67800FE27F1 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D9F187481826F67800FE27F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9F1875C1826F67800FE27F1 /* main.m in Sources */,
+				D9F187601826F67800FE27F1 /* VPNAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D9F187581826F67800FE27F1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9F187591826F67800FE27F1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D9F187761826F67800FE27F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D9F187771826F67800FE27F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D9F187791826F67800FE27F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "openvpn/openvpn-Prefix.pch";
+				INFOPLIST_FILE = "openvpn/openvpn-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D9F1877A1826F67800FE27F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "openvpn/openvpn-Prefix.pch";
+				INFOPLIST_FILE = "openvpn/openvpn-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D9F187471826F67800FE27F1 /* Build configuration list for PBXProject "openvpn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9F187761826F67800FE27F1 /* Debug */,
+				D9F187771826F67800FE27F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D9F187781826F67800FE27F1 /* Build configuration list for PBXNativeTarget "openvpn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9F187791826F67800FE27F1 /* Debug */,
+				D9F1877A1826F67800FE27F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D9F187441826F67800FE27F1 /* Project object */;
+}
