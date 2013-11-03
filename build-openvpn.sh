@@ -1,10 +1,7 @@
 #!/bin/bash
-#  Builds ffmpeg for all three current iPhone targets: iPhoneSimulator-i386,
-#  iPhoneOS-armv7, iPhoneOS-armv7s.
+#  Builds openvpn for all three current iPhone targets: iPhoneSimulator-i386,
+#  iPhoneOS-armv6, iPhoneOS-armv7.
 #
-#  FFmpeg modifications by Chris Ballinger
-#  Copyright 2012 Chris Ballinger <chris@openwatch.net>
-#  
 #  Copyright 2012 Mike Tigas <mike@tig.as>
 #
 #  Based on work by Felix Schulze on 16.12.10.
@@ -23,9 +20,13 @@
 #  limitations under the License.
 #
 ###########################################################################
-#  Choose your ffmpeg version and your currently-installed iOS SDK version:
+#  Choose your openvpn version and your currently-installed iOS SDK version:
 #
+VERSION="2.3.2"
 SDKVERSION="7.0"
+MINIOSVERSION="6.0"
+VERIFYGPG=true
+
 #
 #
 ###########################################################################
@@ -36,6 +37,7 @@ SDKVERSION="7.0"
 
 # No need to change this since xcode build will only compile in the
 # necessary bits from the libraries we create
+#ARCHS="i386 x86_64 armv7 armv7s arm64"
 ARCHS="i386"
 
 DEVELOPER=`xcode-select -print-path`
@@ -47,7 +49,6 @@ REPOROOT=$(pwd)
 OUTPUTDIR="${REPOROOT}/dependencies"
 mkdir -p ${OUTPUTDIR}/include
 mkdir -p ${OUTPUTDIR}/lib
-mkdir -p ${OUTPUTDIR}/bin
 
 
 BUILDDIR="${REPOROOT}/build"
@@ -66,12 +67,32 @@ cd $SRCDIR
 # Exit the script if an error happens
 set -e
 
-OPENVPN_DIR="${REPOROOT}/Submodules/openvpn"
-cd "${OPENVPN_DIR}"
-
-if [ ! -f "${OPENVPN_DIR}/configure" ]; then
-    autoreconf -vi
+if [ ! -e "${SRCDIR}/openvpn-${VERSION}.tar.gz" ]; then
+	echo "Downloading openvpn-${VERSION}.tar.gz"
+    curl -LO http://swupdate.openvpn.org/community/releases/openvpn-${VERSION}.tar.gz
+else
+	echo "Using openvpn-${VERSION}.tar.gz"
 fi
+
+# up to you to set up `gpg` and add keys to your keychain
+if $VERIFYGPG; then
+    if [ ! -e "${SRCDIR}/openvpn-${VERSION}.tar.gz.asc" ]; then
+        curl -O http://swupdate.openvpn.org/community/releases/openvpn-${VERSION}.tar.gz.asc
+    fi
+    echo "Using openssl-${VERSION}.tar.gz.asc"
+    if out=$(gpg --status-fd 1 --verify "openvpn-${VERSION}.tar.gz.asc" "openvpn-${VERSION}.tar.gz" 2>/dev/null) &&
+    echo "$out" | grep -qs "^\[GNUPG:\] VALIDSIG"; then
+        echo "$out" | egrep "GOODSIG|VALIDSIG"
+        echo "Verified GPG signature for source..."
+    else
+        echo "$out" >&2
+        echo "COULD NOT VERIFY PACKAGE SIGNATURE..."
+        exit 1
+    fi
+fi
+
+tar zxf openvpn-${VERSION}.tar.gz -C $SRCDIR
+cd "${SRCDIR}/openvpn-${VERSION}"
 
 set +e # don't bail out of bash script if ccache doesn't exist
 CCACHE=`which ccache`
@@ -86,50 +107,44 @@ set -e # back to regular "bail out on error" mode
 
 for ARCH in ${ARCHS}
 do
-    if [ "${ARCH}" == "i386" ]; then
+	if [ "${ARCH}" == "i386" ] || [ "${ARCH}" == "x86_64" ] ; then
         PLATFORM="iPhoneSimulator"
-        EXTRA_CONFIG=""
-        EXTRA_CFLAGS="-arch i386 -miphoneos-version-min=6.0"
-        EXTRA_LDFLAGS="-miphoneos-version-min=6.0"
+        EXTRA_CONFIG="--host ${ARCH}-apple-darwin"
+        EXTRA_CFLAGS=""
+        EXTRA_LDFLAGS=""
     else
         PLATFORM="iPhoneOS"
-        EXTRA_CONFIG="--arch=arm --target-os=darwin --enable-cross-compile --disable-armv5te"
-        EXTRA_CFLAGS="-w -arch ${ARCH} -miphoneos-version-min=6.0"
-        EXTRA_LDFLAGS="-miphoneos-version-min=6.0"
+        EXTRA_CONFIG="--host arm-apple-darwin"
+        EXTRA_CFLAGS=""
+        EXTRA_LDFLAGS=""
     fi
 
-    OUTPUT_DIR="${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk"
-    if [ ! -d "$OUTPUT_DIR" ]; then
-        mkdir -p ${OUTPUT_DIR}
+	mkdir -p "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk"
 
-        ./configure --disable-lzo --disable-plugin-auth-pam --disable-shared --enable-static ${EXTRA_CONFIG} \
-        --with-sysroot="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk" \
-        --prefix="${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk" \
-        CC="${CCACHE}${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/usr/bin/gcc -arch ${ARCH}" \
-        LDFLAGS="$LDFLAGS -L${OUTPUTDIR}/lib" \
-        CFLAGS="$CFLAGS ${EXTRA_CFLAGS} -I${OUTPUTDIR}/include -isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk" \
-        CPPFLAGS="$CPPFLAGS -I${OUTPUTDIR}/include -isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk"
+	./configure --disable-shared --enable-static --with-pic --disable-lzo --disable-plugin-auth-pam --disable-plugin-down-root ${EXTRA_CONFIG} \
+    --prefix="${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk" \
+    CC="${CCACHE}${DEVELOPER}/usr/bin/gcc" \
+    LDFLAGS="$LDFLAGS -arch ${ARCH} -fPIE -miphoneos-version-min=6.0 ${EXTRA_LDFLAGS} -L${OUTPUTDIR}/lib" \
+    CFLAGS="$CFLAGS -g -O0 -D__APPLE_USE_RFC_3542 -arch ${ARCH} -fPIE -miphoneos-version-min=6.0 ${EXTRA_CFLAGS} -I${OUTPUTDIR}/include -isysroot ${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer/SDKs/${PLATFORM}${SDKVERSION}.sdk" \
 
-        # Build the application and install it to the fake SDK intermediary dir
-        # we have set up. Make sure to clean up afterward because we will re-use
-        # this source tree to cross-compile other targets.
-        make -j2
-        make install
-        make clean
-    fi
+    # Build the application and install it to the fake SDK intermediary dir
+    # we have set up. Make sure to clean up afterward because we will re-use
+    # this source tree to cross-compile other targets.
+	make -j2
+	make install
+	#make clean
 done
 
 ########################################
 
 echo "Build library..."
 
-# These are the libs that comprise ffmpeg.
-OUTPUT_LIBS="libavcodec.a libavdevice.a libavfilter.a libavformat.a libavutil.a libswresample.a libswscale.a"
+# These are the libs that comprise openvpn.
+OUTPUT_LIBS="openvpn.a"
 for OUTPUT_LIB in ${OUTPUT_LIBS}; do
     INPUT_LIBS=""
     for ARCH in ${ARCHS}; do
-        if [ "${ARCH}" == "i386" ];
-        then
+        if [ "${ARCH}" == "i386" ] || [ "${ARCH}" == "x86_64" ] ; then
             PLATFORM="iPhoneSimulator"
         else
             PLATFORM="iPhoneOS"
@@ -149,8 +164,7 @@ for OUTPUT_LIB in ${OUTPUT_LIBS}; do
 done
 
 for ARCH in ${ARCHS}; do
-    if [ "${ARCH}" == "i386" ];
-    then
+    if [ "${ARCH}" == "i386" ] || [ "${ARCH}" == "x86_64" ] ; then
         PLATFORM="iPhoneSimulator"
     else
         PLATFORM="iPhoneOS"
@@ -163,25 +177,11 @@ for ARCH in ${ARCHS}; do
     fi
 done
 
-for ARCH in ${ARCHS}; do
-    if [ "${ARCH}" == "i386" ];
-    then
-        PLATFORM="iPhoneSimulator"
-    else
-        PLATFORM="iPhoneOS"
-    fi
-    cp -R ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/bin/* ${OUTPUTDIR}/bin/
-    if [ $? == "0" ]; then
-        # We only need to copy the binaries over once. (So break out of forloop
-        # once we get first success.)
-        break
-    fi
-done
 
 ####################
 
 echo "Building done."
 echo "Cleaning up..."
-rm -fr ${INTERDIR}
-rm -fr "${SRCDIR}/ffmpeg-${VERSION}"
+#rm -fr ${INTERDIR}
+#rm -fr "${SRCDIR}/openvpn-${VERSION}"
 echo "Done."
