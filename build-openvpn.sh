@@ -37,8 +37,7 @@ VERIFYGPG=true
 
 # No need to change this since xcode build will only compile in the
 # necessary bits from the libraries we create
-#ARCHS="i386 x86_64 armv7 armv7s arm64"
-ARCHS="i386"
+ARCHS="i386 x86_64 armv7 armv7s arm64"
 
 DEVELOPER=`xcode-select -print-path`
 
@@ -94,6 +93,17 @@ fi
 tar zxf openvpn-${VERSION}.tar.gz -C $SRCDIR
 cd "${SRCDIR}/openvpn-${VERSION}"
 
+####
+# Patch to remove the main() function from openvpn.c
+patch -p3 < ../../../build-patches/openvpn-main.diff
+
+# Patch to makefile build a static library
+patch -p3 < ../../../build-patches/openvpn-makefile.diff
+
+echo "Copying <net/route.h> from iPhoneSimulator"
+mkdir -p ${OUTPUTDIR}/include/net
+cp ${DEVELOPER}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator${SDKVERSION}.sdk/usr/include/net/route.h ${OUTPUTDIR}/include/net/route.h
+
 set +e # don't bail out of bash script if ccache doesn't exist
 CCACHE=`which ccache`
 if [ $? == "0" ]; then
@@ -132,7 +142,11 @@ do
     # this source tree to cross-compile other targets.
 	make -j2
 	make install
-	#make clean
+
+    mkdir -p ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/
+    cp src/openvpn/libopenvpn.a ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/libopenvpn.a
+
+	make clean
 done
 
 ########################################
@@ -140,7 +154,7 @@ done
 echo "Build library..."
 
 # These are the libs that comprise openvpn.
-OUTPUT_LIBS="openvpn.a"
+OUTPUT_LIBS="libopenvpn.a"
 for OUTPUT_LIB in ${OUTPUT_LIBS}; do
     INPUT_LIBS=""
     for ARCH in ${ARCHS}; do
@@ -182,6 +196,6 @@ done
 
 echo "Building done."
 echo "Cleaning up..."
-#rm -fr ${INTERDIR}
-#rm -fr "${SRCDIR}/openvpn-${VERSION}"
+rm -fr ${INTERDIR}
+rm -fr "${SRCDIR}/openvpn-${VERSION}"
 echo "Done."
