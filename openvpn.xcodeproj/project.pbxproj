@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9EA52131827295000CB83C9 /* VPNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EA52121827295000CB83C9 /* VPNViewController.m */; };
 		D9F187501826F67800FE27F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F1874F1826F67800FE27F1 /* Foundation.framework */; };
 		D9F187521826F67800FE27F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187511826F67800FE27F1 /* CoreGraphics.framework */; };
 		D9F187541826F67800FE27F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187531826F67800FE27F1 /* UIKit.framework */; };
@@ -19,9 +20,13 @@
 		D9F187D418270DD600FE27F1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187D118270DD600FE27F1 /* libssl.a */; };
 		D9F1889F18270FA800FE27F1 /* VPNWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F1889E18270FA800FE27F1 /* VPNWrapper.m */; };
 		D9F188A41827265900FE27F1 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F188A31827265900FE27F1 /* libresolv.dylib */; };
+		D9F188AA1827287900FE27F1 /* server.conf in Resources */ = {isa = PBXBuildFile; fileRef = D9F188A71827287900FE27F1 /* server.conf */; };
+		D9F188AB1827287900FE27F1 /* static.key in Resources */ = {isa = PBXBuildFile; fileRef = D9F188A81827287900FE27F1 /* static.key */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D9EA52111827295000CB83C9 /* VPNViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPNViewController.h; sourceTree = "<group>"; };
+		D9EA52121827295000CB83C9 /* VPNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPNViewController.m; sourceTree = "<group>"; };
 		D9F1874C1826F67800FE27F1 /* openvpn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openvpn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9F1874F1826F67800FE27F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D9F187511826F67800FE27F1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -309,6 +314,8 @@
 		D9F1889D18270FA800FE27F1 /* VPNWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPNWrapper.h; sourceTree = "<group>"; };
 		D9F1889E18270FA800FE27F1 /* VPNWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPNWrapper.m; sourceTree = "<group>"; };
 		D9F188A31827265900FE27F1 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
+		D9F188A71827287900FE27F1 /* server.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = server.conf; sourceTree = "<group>"; };
+		D9F188A81827287900FE27F1 /* static.key */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = static.key; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +339,7 @@
 		D9F187431826F67800FE27F1 = {
 			isa = PBXGroup;
 			children = (
+				D9F188A51827287900FE27F1 /* configuration */,
 				D9F187D518270DD900FE27F1 /* Dependencies */,
 				D9F187551826F67800FE27F1 /* openvpn */,
 				D9F1874E1826F67800FE27F1 /* Frameworks */,
@@ -366,6 +374,8 @@
 				D9F1889E18270FA800FE27F1 /* VPNWrapper.m */,
 				D9F1875E1826F67800FE27F1 /* VPNAppDelegate.h */,
 				D9F1875F1826F67800FE27F1 /* VPNAppDelegate.m */,
+				D9EA52111827295000CB83C9 /* VPNViewController.h */,
+				D9EA52121827295000CB83C9 /* VPNViewController.m */,
 				D9F187611826F67800FE27F1 /* Images.xcassets */,
 				D9F187561826F67800FE27F1 /* Supporting Files */,
 			);
@@ -753,6 +763,15 @@
 			path = "down-root";
 			sourceTree = "<group>";
 		};
+		D9F188A51827287900FE27F1 /* configuration */ = {
+			isa = PBXGroup;
+			children = (
+				D9F188A71827287900FE27F1 /* server.conf */,
+				D9F188A81827287900FE27F1 /* static.key */,
+			);
+			path = configuration;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -806,6 +825,8 @@
 			files = (
 				D9F1875A1826F67800FE27F1 /* InfoPlist.strings in Resources */,
 				D9F187621826F67800FE27F1 /* Images.xcassets in Resources */,
+				D9F188AA1827287900FE27F1 /* server.conf in Resources */,
+				D9F188AB1827287900FE27F1 /* static.key in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,6 +838,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9F1875C1826F67800FE27F1 /* main.m in Sources */,
+				D9EA52131827295000CB83C9 /* VPNViewController.m in Sources */,
 				D9F187601826F67800FE27F1 /* VPNAppDelegate.m in Sources */,
 				D9F1889F18270FA800FE27F1 /* VPNWrapper.m in Sources */,
 			);

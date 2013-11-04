@@ -1,10 +1,10 @@
---- build/src/openvpn-2.3.2/src/openvpn/Makefile.in.orig	2013-05-31 05:01:00.000000000 -0700
-+++ build/src/openvpn-2.3.2/src/openvpn/Makefile.in	2013-11-03 14:13:12.000000000 -0800
-@@ -465,7 +465,7 @@
- 	rm -f $$list
+--- src/openvpn/Makefile.in.orig	2013-11-03 18:40:30.000000000 -0800
++++ src/openvpn/Makefile.in	2013-11-03 18:43:49.000000000 -0800
+@@ -546,7 +546,7 @@
+ 
  openvpn$(EXEEXT): $(openvpn_OBJECTS) $(openvpn_DEPENDENCIES) $(EXTRA_openvpn_DEPENDENCIES) 
  	@rm -f openvpn$(EXEEXT)
--	$(LINK) $(openvpn_OBJECTS) $(openvpn_LDADD) $(LIBS)
+-	$(AM_V_CCLD)$(LINK) $(openvpn_OBJECTS) $(openvpn_LDADD) $(LIBS)
 +	libtool -static -o libopenvpn.a $(openvpn_OBJECTS)
  
  mostlyclean-compile:

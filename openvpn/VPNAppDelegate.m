@@ -7,7 +7,7 @@
 //
 
 #import "VPNAppDelegate.h"
-#import "VPNWrapper.h"
+#import "VPNViewController.h"
 
 @implementation VPNAppDelegate
 
@@ -16,8 +16,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = [[VPNViewController alloc] init];
     [self.window makeKeyAndVisible];
-    [[VPNWrapper sharedInstance] startWithOptions:@[@"--version"]];
     return YES;
 }
 

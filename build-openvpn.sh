@@ -25,7 +25,6 @@
 VERSION="2.3.2"
 SDKVERSION="7.0"
 MINIOSVERSION="6.0"
-VERIFYGPG=true
 
 #
 #
@@ -37,7 +36,8 @@ VERIFYGPG=true
 
 # No need to change this since xcode build will only compile in the
 # necessary bits from the libraries we create
-ARCHS="i386"
+#ARCHS="i386 x86_64 armv7 armv7s arm64"
+ARCHS="i386 armv7"
 
 DEVELOPER=`xcode-select -print-path`
 
@@ -66,39 +66,15 @@ cd $SRCDIR
 # Exit the script if an error happens
 set -e
 
-if [ ! -e "${SRCDIR}/openvpn-${VERSION}.tar.gz" ]; then
-	echo "Downloading openvpn-${VERSION}.tar.gz"
-    curl -LO http://swupdate.openvpn.org/community/releases/openvpn-${VERSION}.tar.gz
-else
-	echo "Using openvpn-${VERSION}.tar.gz"
+OPENVPN_DIR="${REPOROOT}/Submodules/openvpn"
+cd "${OPENVPN_DIR}"
+
+if [ ! -f "${OPENVPN_DIR}/configure" ]; then
+    autoreconf -vi
 fi
-
-# up to you to set up `gpg` and add keys to your keychain
-if $VERIFYGPG; then
-    if [ ! -e "${SRCDIR}/openvpn-${VERSION}.tar.gz.asc" ]; then
-        curl -O http://swupdate.openvpn.org/community/releases/openvpn-${VERSION}.tar.gz.asc
-    fi
-    echo "Using openssl-${VERSION}.tar.gz.asc"
-    if out=$(gpg --status-fd 1 --verify "openvpn-${VERSION}.tar.gz.asc" "openvpn-${VERSION}.tar.gz" 2>/dev/null) &&
-    echo "$out" | grep -qs "^\[GNUPG:\] VALIDSIG"; then
-        echo "$out" | egrep "GOODSIG|VALIDSIG"
-        echo "Verified GPG signature for source..."
-    else
-        echo "$out" >&2
-        echo "COULD NOT VERIFY PACKAGE SIGNATURE..."
-        exit 1
-    fi
-fi
-
-tar zxf openvpn-${VERSION}.tar.gz -C $SRCDIR
-cd "${SRCDIR}/openvpn-${VERSION}"
-
-####
-# Patch to remove the main() function from openvpn.c
-patch -p3 < ../../../build-patches/openvpn-main.diff
 
 # Patch to makefile build a static library
-patch -p3 < ../../../build-patches/openvpn-makefile.diff
+patch -p0 < ../../build-patches/openvpn-makefile.diff
 
 echo "Copying <net/route.h> from iPhoneSimulator"
 mkdir -p ${OUTPUTDIR}/include/net
@@ -131,7 +107,7 @@ do
 
 	mkdir -p "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk"
 
-	./configure --disable-shared --enable-static --with-pic --disable-lzo --disable-plugin-auth-pam --disable-plugin-down-root ${EXTRA_CONFIG} \
+	./configure --disable-snappy --disable-shared --enable-static --with-pic --disable-lzo --disable-plugin-auth-pam --disable-plugin-down-root ${EXTRA_CONFIG} \
     --prefix="${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk" \
     CC="${CCACHE}${DEVELOPER}/usr/bin/gcc" \
     LDFLAGS="$LDFLAGS -arch ${ARCH} -fPIE -miphoneos-version-min=6.0 ${EXTRA_LDFLAGS} -L${OUTPUTDIR}/lib" \
@@ -146,7 +122,7 @@ do
     mkdir -p ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/
     cp src/openvpn/libopenvpn.a ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/libopenvpn.a
 
-	#make clean
+	make clean
 done
 
 ########################################
@@ -196,6 +172,7 @@ done
 
 echo "Building done."
 echo "Cleaning up..."
-#rm -fr ${INTERDIR}
-#rm -fr "${SRCDIR}/openvpn-${VERSION}"
+cd "${OPENVPN_DIR}"
+rm -fr ${INTERDIR}
+git clean -f && git clean -f -X
 echo "Done."
