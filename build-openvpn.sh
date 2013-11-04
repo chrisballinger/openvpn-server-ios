@@ -36,8 +36,7 @@ MINIOSVERSION="6.0"
 
 # No need to change this since xcode build will only compile in the
 # necessary bits from the libraries we create
-#ARCHS="i386 x86_64 armv7 armv7s arm64"
-ARCHS="i386 armv7"
+ARCHS="i386 x86_64 armv7 armv7s arm64"
 
 DEVELOPER=`xcode-select -print-path`
 
@@ -71,14 +70,17 @@ cd "${OPENVPN_DIR}"
 
 if [ ! -f "${OPENVPN_DIR}/configure" ]; then
     autoreconf -vi
+    # Patch to makefile build a static library
+    patch -p0 < ../../build-patches/openvpn-makefile.diff
 fi
 
-# Patch to makefile build a static library
-patch -p0 < ../../build-patches/openvpn-makefile.diff
-
-echo "Copying <net/route.h> from iPhoneSimulator"
+echo "Copying <net/route.h>, <net/if_utun.h>, <sys/kern_control.h> and <sys/sys_domain.h> from iPhoneSimulator"
 mkdir -p ${OUTPUTDIR}/include/net
+mkdir -p ${OUTPUTDIR}/include/sys
 cp ${DEVELOPER}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator${SDKVERSION}.sdk/usr/include/net/route.h ${OUTPUTDIR}/include/net/route.h
+cp ${DEVELOPER}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator${SDKVERSION}.sdk/usr/include/net/if_utun.h ${OUTPUTDIR}/include/net/if_utun.h
+cp ${DEVELOPER}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator${SDKVERSION}.sdk/usr/include/sys/kern_control.h ${OUTPUTDIR}/include/sys/kern_control.h
+cp ${DEVELOPER}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator${SDKVERSION}.sdk/usr/include/sys/sys_domain.h ${OUTPUTDIR}/include/sys/sys_domain.h
 
 set +e # don't bail out of bash script if ccache doesn't exist
 CCACHE=`which ccache`
