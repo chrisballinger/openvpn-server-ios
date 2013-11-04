@@ -3,7 +3,9 @@ openvpn-server-ios
 
 Tethering the hard way.
 
-It turns out that Apple doesn't allow you to use `<net/if_utun.h>` unless you pay them a lot of money so we need to use [tunemu](https://github.com/friedrich/hans/blob/master/src/tunemu.c), a tun emulator that works over ppp.
+It turns out that Apple doesn't allow you to use `<net/if_utun.h>` unless you pay them a lot of money. Unfortunately you can't use [tunemu](https://github.com/friedrich/hans/blob/master/src/tunemu.c) either. 
+
+Apple refuses to allow people to use the VPN framework unless they sign some sort of NDA: http://blog.michael.kuron-germany.de/2010/09/ios-4-1-undocumented-vpn-api-used-by-cisco-anyconnect/
 
 ## Setup
 

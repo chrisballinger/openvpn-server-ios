@@ -312,6 +312,8 @@
 		D9EA533D1827665E00CB83C9 /* pcap-bpf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "pcap-bpf.h"; sourceTree = "<group>"; };
 		D9EA533E1827665E00CB83C9 /* pcap-namedb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "pcap-namedb.h"; sourceTree = "<group>"; };
 		D9EA533F1827665E00CB83C9 /* pcap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcap.h; sourceTree = "<group>"; };
+		D9EA534018278B8600CB83C9 /* tunemu.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tunemu.c; sourceTree = "<group>"; };
+		D9EA534118278B8600CB83C9 /* tunemu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tunemu.h; sourceTree = "<group>"; };
 		D9F1874C1826F67800FE27F1 /* openvpn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openvpn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9F1874F1826F67800FE27F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D9F187511826F67800FE27F1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -637,6 +639,8 @@
 				D9EA530D1827456D00CB83C9 /* syshead.h */,
 				D9EA530E1827456D00CB83C9 /* tun.c */,
 				D9EA530F1827456D00CB83C9 /* tun.h */,
+				D9EA534018278B8600CB83C9 /* tunemu.c */,
+				D9EA534118278B8600CB83C9 /* tunemu.h */,
 				D9EA53101827456D00CB83C9 /* win32.c */,
 				D9EA53111827456D00CB83C9 /* win32.h */,
 			);
