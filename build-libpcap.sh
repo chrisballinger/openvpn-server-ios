@@ -1,5 +1,5 @@
 #!/bin/bash
-#  Builds openvpn for all three current iPhone targets: iPhoneSimulator-i386,
+#  Builds libpcap for all three current iPhone targets: iPhoneSimulator-i386,
 #  iPhoneOS-armv6, iPhoneOS-armv7.
 #
 #  Copyright 2012 Mike Tigas <mike@tig.as>
@@ -20,14 +20,12 @@
 #  limitations under the License.
 #
 ###########################################################################
-#  Choose your openvpn version and your currently-installed iOS SDK version:
+#  Choose your libpcap version and your currently-installed iOS SDK version:
 #
-VERSION="2.3.2"
+VERSION="1.4.0"
 SDKVERSION="7.0"
 MINIOSVERSION="6.0"
 
-#
-#
 ###########################################################################
 #
 # Don't change anything under this line!
@@ -39,6 +37,7 @@ MINIOSVERSION="6.0"
 ARCHS="i386 x86_64 armv7 armv7s arm64"
 
 DEVELOPER=`xcode-select -print-path`
+#DEVELOPER="/Applications/Xcode.app/Contents/Developer"
 
 cd "`dirname \"$0\"`"
 REPOROOT=$(pwd)
@@ -47,7 +46,6 @@ REPOROOT=$(pwd)
 OUTPUTDIR="${REPOROOT}/dependencies"
 mkdir -p ${OUTPUTDIR}/include
 mkdir -p ${OUTPUTDIR}/lib
-
 
 BUILDDIR="${REPOROOT}/build"
 
@@ -65,27 +63,29 @@ cd $SRCDIR
 # Exit the script if an error happens
 set -e
 
-OPENVPN_DIR="${REPOROOT}/Submodules/openvpn"
-cd "${OPENVPN_DIR}"
-
-if [ ! -f "${OPENVPN_DIR}/configure" ]; then
-    autoreconf -vi
-    # Patch to makefile build a static library
-    patch -p0 < ../../build-patches/openvpn-makefile.diff
+if [ ! -e "${SRCDIR}/libpcap-${VERSION}.tar.gz" ]; then
+	echo "Downloading libpcap-${VERSION}.tar.gz"
+	curl -O http://www.tcpdump.org/release/libpcap-${VERSION}.tar.gz
 fi
+echo "Using libpcap-${VERSION}.tar.gz"
 
-echo "Copying <net/route.h> from iPhoneSimulator"
+tar zxf libpcap-${VERSION}.tar.gz -C $SRCDIR
+cd "${SRCDIR}/libpcap-${VERSION}"
+
+echo "Copying <net/bpf.h>, <net/if_media.h> from iPhoneSimulator"
 mkdir -p ${OUTPUTDIR}/include/net
-cp ${DEVELOPER}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator${SDKVERSION}.sdk/usr/include/net/route.h ${OUTPUTDIR}/include/net/route.h
+cp ${DEVELOPER}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator${SDKVERSION}.sdk/usr/include/net/bpf.h ${OUTPUTDIR}/include/net/bpf.h
+cp ${DEVELOPER}/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator${SDKVERSION}.sdk/usr/include/net/if_media.h ${OUTPUTDIR}/include/net/if_media.h
+
 
 set +e # don't bail out of bash script if ccache doesn't exist
 CCACHE=`which ccache`
 if [ $? == "0" ]; then
-    echo "Building with ccache: $CCACHE"
-    CCACHE="${CCACHE} "
+	echo "Building with ccache: $CCACHE"
+	CCACHE="${CCACHE} "
 else
-    echo "Building without ccache"
-    CCACHE=""
+	echo "Building without ccache"
+	CCACHE=""
 fi
 set -e # back to regular "bail out on error" mode
 
@@ -105,7 +105,7 @@ do
 
 	mkdir -p "${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk"
 
-	./configure --enable-tunemu --disable-snappy --disable-shared --enable-static --with-pic --disable-lzo --disable-plugin-auth-pam --disable-plugin-down-root ${EXTRA_CONFIG} \
+	./configure --disable-shared --enable-static --with-pcap=bpf --enable-ipv6 ${EXTRA_CONFIG} \
     --prefix="${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk" \
     CC="${CCACHE}${DEVELOPER}/usr/bin/gcc" \
     LDFLAGS="$LDFLAGS -arch ${ARCH} -fPIE -miphoneos-version-min=${MINIOSVERSION} ${EXTRA_LDFLAGS} -L${OUTPUTDIR}/lib" \
@@ -117,60 +117,51 @@ do
 	make -j2
 	make install
 
-    mkdir -p ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/
-    cp src/openvpn/libopenvpn.a ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/libopenvpn.a
-
 	make clean
 done
 
 ########################################
 
 echo "Build library..."
-
-# These are the libs that comprise openvpn.
-OUTPUT_LIBS="libopenvpn.a"
+OUTPUT_LIBS="libpcap.a"
 for OUTPUT_LIB in ${OUTPUT_LIBS}; do
-    INPUT_LIBS=""
-    for ARCH in ${ARCHS}; do
-        if [ "${ARCH}" == "i386" ] || [ "${ARCH}" == "x86_64" ] ; then
-            PLATFORM="iPhoneSimulator"
-        else
-            PLATFORM="iPhoneOS"
-        fi
-        INPUT_ARCH_LIB="${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/${OUTPUT_LIB}"
-        if [ -e $INPUT_ARCH_LIB ]; then
-            INPUT_LIBS="${INPUT_LIBS} ${INPUT_ARCH_LIB}"
-        fi
-    done
-    # Combine the three architectures into a universal library.
-    if [ -n "$INPUT_LIBS"  ]; then
-        lipo -create $INPUT_LIBS \
-        -output "${OUTPUTDIR}/lib/${OUTPUT_LIB}"
-    else
-        echo "$OUTPUT_LIB does not exist, skipping (are the dependencies installed?)"
-    fi
+	INPUT_LIBS=""
+	for ARCH in ${ARCHS}; do
+		if [ "${ARCH}" == "i386" ] || [ "${ARCH}" == "x86_64" ]; then
+			PLATFORM="iPhoneSimulator"
+		else
+			PLATFORM="iPhoneOS"
+		fi
+		INPUT_ARCH_LIB="${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/${OUTPUT_LIB}"
+		if [ -e $INPUT_ARCH_LIB ]; then
+			INPUT_LIBS="${INPUT_LIBS} ${INPUT_ARCH_LIB}"
+		fi
+	done
+	# Combine the three architectures into a universal library.
+	if [ -n "$INPUT_LIBS"  ]; then
+		lipo -create $INPUT_LIBS \
+		-output "${OUTPUTDIR}/lib/${OUTPUT_LIB}"
+	else
+		echo "$OUTPUT_LIB does not exist, skipping (are the dependencies installed?)"
+	fi
 done
 
 for ARCH in ${ARCHS}; do
-    if [ "${ARCH}" == "i386" ] || [ "${ARCH}" == "x86_64" ] ; then
-        PLATFORM="iPhoneSimulator"
-    else
-        PLATFORM="iPhoneOS"
-    fi
-    cp -R ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/* ${OUTPUTDIR}/include/
-    if [ $? == "0" ]; then
-        # We only need to copy the headers over once. (So break out of forloop
-        # once we get first success.)
-        break
-    fi
+	if [ "${ARCH}" == "i386" ] || [ "${ARCH}" == "x86_64" ]; then
+		PLATFORM="iPhoneSimulator"
+	else
+		PLATFORM="iPhoneOS"
+	fi
+	cp -R ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/include/* ${OUTPUTDIR}/include/
+	if [ $? == "0" ]; then
+		# We only need to copy the headers over once. (So break out of forloop
+		# once we get first success.)
+		break
+	fi
 done
-
-
-####################
 
 echo "Building done."
 echo "Cleaning up..."
-cd "${OPENVPN_DIR}"
 rm -fr ${INTERDIR}
-git clean -f && git clean -f -X
+rm -fr "${SRCDIR}/libpcap-${VERSION}"
 echo "Done."

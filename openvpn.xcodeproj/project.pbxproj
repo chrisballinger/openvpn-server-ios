@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D9EA52131827295000CB83C9 /* VPNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9EA52121827295000CB83C9 /* VPNViewController.m */; };
-		D9EA53311827483A00CB83C9 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9EA53301827483A00CB83C9 /* Entitlements.plist */; };
+		D9EA53331827664C00CB83C9 /* libpcap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9EA53321827664C00CB83C9 /* libpcap.a */; };
 		D9F187501826F67800FE27F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F1874F1826F67800FE27F1 /* Foundation.framework */; };
 		D9F187521826F67800FE27F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187511826F67800FE27F1 /* CoreGraphics.framework */; };
 		D9F187541826F67800FE27F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187531826F67800FE27F1 /* UIKit.framework */; };
@@ -300,7 +300,18 @@
 		D9EA532D1827456D00CB83C9 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		D9EA532E1827456D00CB83C9 /* README.down-root */ = {isa = PBXFileReference; lastKnownFileType = text; path = "README.down-root"; sourceTree = "<group>"; };
 		D9EA532F1827456D00CB83C9 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		D9EA53301827483A00CB83C9 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		D9EA53321827664C00CB83C9 /* libpcap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpcap.a; sourceTree = "<group>"; };
+		D9EA53351827665E00CB83C9 /* bluetooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bluetooth.h; sourceTree = "<group>"; };
+		D9EA53361827665E00CB83C9 /* bpf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bpf.h; sourceTree = "<group>"; };
+		D9EA53371827665E00CB83C9 /* ipnet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ipnet.h; sourceTree = "<group>"; };
+		D9EA53381827665E00CB83C9 /* namedb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = namedb.h; sourceTree = "<group>"; };
+		D9EA53391827665E00CB83C9 /* pcap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcap.h; sourceTree = "<group>"; };
+		D9EA533A1827665E00CB83C9 /* sll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sll.h; sourceTree = "<group>"; };
+		D9EA533B1827665E00CB83C9 /* usb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usb.h; sourceTree = "<group>"; };
+		D9EA533C1827665E00CB83C9 /* vlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vlan.h; sourceTree = "<group>"; };
+		D9EA533D1827665E00CB83C9 /* pcap-bpf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "pcap-bpf.h"; sourceTree = "<group>"; };
+		D9EA533E1827665E00CB83C9 /* pcap-namedb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "pcap-namedb.h"; sourceTree = "<group>"; };
+		D9EA533F1827665E00CB83C9 /* pcap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcap.h; sourceTree = "<group>"; };
 		D9F1874C1826F67800FE27F1 /* openvpn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = openvpn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9F1874F1826F67800FE27F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D9F187511826F67800FE27F1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -408,6 +419,7 @@
 				D9F188A41827265900FE27F1 /* libresolv.dylib in Frameworks */,
 				D9F187521826F67800FE27F1 /* CoreGraphics.framework in Frameworks */,
 				D9F187541826F67800FE27F1 /* UIKit.framework in Frameworks */,
+				D9EA53331827664C00CB83C9 /* libpcap.a in Frameworks */,
 				D9F187D418270DD600FE27F1 /* libssl.a in Frameworks */,
 				D9F187D218270DD600FE27F1 /* libcrypto.a in Frameworks */,
 				D9F187D318270DD600FE27F1 /* libopenvpn.a in Frameworks */,
@@ -786,6 +798,21 @@
 			path = .deps;
 			sourceTree = "<group>";
 		};
+		D9EA53341827665E00CB83C9 /* pcap */ = {
+			isa = PBXGroup;
+			children = (
+				D9EA53351827665E00CB83C9 /* bluetooth.h */,
+				D9EA53361827665E00CB83C9 /* bpf.h */,
+				D9EA53371827665E00CB83C9 /* ipnet.h */,
+				D9EA53381827665E00CB83C9 /* namedb.h */,
+				D9EA53391827665E00CB83C9 /* pcap.h */,
+				D9EA533A1827665E00CB83C9 /* sll.h */,
+				D9EA533B1827665E00CB83C9 /* usb.h */,
+				D9EA533C1827665E00CB83C9 /* vlan.h */,
+			);
+			path = pcap;
+			sourceTree = "<group>";
+		};
 		D9F187431826F67800FE27F1 = {
 			isa = PBXGroup;
 			children = (
@@ -839,7 +866,6 @@
 				D9F187581826F67800FE27F1 /* InfoPlist.strings */,
 				D9F1875B1826F67800FE27F1 /* main.m */,
 				D9F1875D1826F67800FE27F1 /* openvpn-Prefix.pch */,
-				D9EA53301827483A00CB83C9 /* Entitlements.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -847,6 +873,10 @@
 		D9F1877E18270DD600FE27F1 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				D9EA53341827665E00CB83C9 /* pcap */,
+				D9EA533D1827665E00CB83C9 /* pcap-bpf.h */,
+				D9EA533E1827665E00CB83C9 /* pcap-namedb.h */,
+				D9EA533F1827665E00CB83C9 /* pcap.h */,
 				D9F1877F18270DD600FE27F1 /* net */,
 				D9F1878118270DD600FE27F1 /* openssl */,
 				D9F187CD18270DD600FE27F1 /* openvpn-plugin.h */,
@@ -948,6 +978,7 @@
 		D9F187CE18270DD600FE27F1 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				D9EA53321827664C00CB83C9 /* libpcap.a */,
 				D9F187CF18270DD600FE27F1 /* libcrypto.a */,
 				D9F187D018270DD600FE27F1 /* libopenvpn.a */,
 				D9F187D118270DD600FE27F1 /* libssl.a */,
@@ -1029,7 +1060,6 @@
 				D9F1875A1826F67800FE27F1 /* InfoPlist.strings in Resources */,
 				D9F187621826F67800FE27F1 /* Images.xcassets in Resources */,
 				D9F188AA1827287900FE27F1 /* server.conf in Resources */,
-				D9EA53311827483A00CB83C9 /* Entitlements.plist in Resources */,
 				D9F188AB1827287900FE27F1 /* static.key in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1141,7 +1171,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/openvpn/Entitlements.plist";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "openvpn/openvpn-Prefix.pch";
 				INFOPLIST_FILE = "openvpn/openvpn-Info.plist";
@@ -1160,7 +1189,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/openvpn/Entitlements.plist";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "openvpn/openvpn-Prefix.pch";
 				INFOPLIST_FILE = "openvpn/openvpn-Info.plist";

@@ -1,3 +1,6 @@
 [submodule "Submodules/openvpn"]
 	path = Submodules/openvpn
 	url = git@github.com:chrisballinger/openvpn.git
+[submodule "Submodules/hans"]
+	path = Submodules/hans
+	url = git@github.com:chrisballinger/hans.git
