@@ -11,7 +11,7 @@
 extern int openvpn_main(int argc, char *argv[]);
 
 @interface VPNWrapper()
-@property (nonatomic) BOOL started;
+@property (nonatomic) BOOL isStarted;
 @end
 
 @implementation VPNWrapper
@@ -34,6 +34,10 @@ extern int openvpn_main(int argc, char *argv[]);
 
 - (void) startWithOptions:(NSArray *)options {
     dispatch_async(self.queue, ^{
+        if (self.isStarted) {
+            return;
+        }
+        self.isStarted = YES;
         NSMutableArray *arguments = [NSMutableArray arrayWithCapacity:1+[options count]];
         [arguments addObject:@"openvpn"];
         [arguments addObjectsFromArray:options];

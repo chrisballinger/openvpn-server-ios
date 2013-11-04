@@ -18,6 +18,7 @@
 		D9F187D318270DD600FE27F1 /* libopenvpn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187D018270DD600FE27F1 /* libopenvpn.a */; };
 		D9F187D418270DD600FE27F1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187D118270DD600FE27F1 /* libssl.a */; };
 		D9F1889F18270FA800FE27F1 /* VPNWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F1889E18270FA800FE27F1 /* VPNWrapper.m */; };
+		D9F188A41827265900FE27F1 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F188A31827265900FE27F1 /* libresolv.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -307,6 +308,7 @@
 		D9F1889C18270E2400FE27F1 /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		D9F1889D18270FA800FE27F1 /* VPNWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPNWrapper.h; sourceTree = "<group>"; };
 		D9F1889E18270FA800FE27F1 /* VPNWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPNWrapper.m; sourceTree = "<group>"; };
+		D9F188A31827265900FE27F1 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +316,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9F188A41827265900FE27F1 /* libresolv.dylib in Frameworks */,
 				D9F187521826F67800FE27F1 /* CoreGraphics.framework in Frameworks */,
 				D9F187541826F67800FE27F1 /* UIKit.framework in Frameworks */,
 				D9F187D418270DD600FE27F1 /* libssl.a in Frameworks */,
@@ -347,6 +350,7 @@
 		D9F1874E1826F67800FE27F1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D9F188A31827265900FE27F1 /* libresolv.dylib */,
 				D9F1874F1826F67800FE27F1 /* Foundation.framework */,
 				D9F187511826F67800FE27F1 /* CoreGraphics.framework */,
 				D9F187531826F67800FE27F1 /* UIKit.framework */,
