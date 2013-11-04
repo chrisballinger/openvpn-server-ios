@@ -1,6 +1,14 @@
 --- build/src/openvpn-2.3.2/src/openvpn/openvpn.c.orig	2013-05-31 05:00:07.000000000 -0700
-+++ build/src/openvpn-2.3.2/src/openvpn/openvpn.c	2013-11-03 13:31:06.000000000 -0800
-@@ -290,37 +290,3 @@
++++ build/src/openvpn-2.3.2/src/openvpn/openvpn.c	2013-11-03 16:41:28.000000000 -0800
+@@ -127,7 +127,6 @@
+  * @param argc - Commandline argument count.
+  * @param argv - Commandline argument values.
+  */
+-static
+ int
+ openvpn_main (int argc, char *argv[])
+ {
+@@ -290,37 +289,3 @@
    openvpn_exit (OPENVPN_EXIT_STATUS_GOOD);  /* exit point */
    return 0;			            /* NOTREACHED */
  }

@@ -17,6 +17,7 @@
 		D9F187D218270DD600FE27F1 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187CF18270DD600FE27F1 /* libcrypto.a */; };
 		D9F187D318270DD600FE27F1 /* libopenvpn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187D018270DD600FE27F1 /* libopenvpn.a */; };
 		D9F187D418270DD600FE27F1 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9F187D118270DD600FE27F1 /* libssl.a */; };
+		D9F1889F18270FA800FE27F1 /* VPNWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F1889E18270FA800FE27F1 /* VPNWrapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -304,6 +305,8 @@
 		D9F1889A18270E2400FE27F1 /* README.down-root */ = {isa = PBXFileReference; lastKnownFileType = text; path = "README.down-root"; sourceTree = "<group>"; };
 		D9F1889B18270E2400FE27F1 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		D9F1889C18270E2400FE27F1 /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		D9F1889D18270FA800FE27F1 /* VPNWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPNWrapper.h; sourceTree = "<group>"; };
+		D9F1889E18270FA800FE27F1 /* VPNWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VPNWrapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,6 +358,8 @@
 		D9F187551826F67800FE27F1 /* openvpn */ = {
 			isa = PBXGroup;
 			children = (
+				D9F1889D18270FA800FE27F1 /* VPNWrapper.h */,
+				D9F1889E18270FA800FE27F1 /* VPNWrapper.m */,
 				D9F1875E1826F67800FE27F1 /* VPNAppDelegate.h */,
 				D9F1875F1826F67800FE27F1 /* VPNAppDelegate.m */,
 				D9F187611826F67800FE27F1 /* Images.xcassets */,
@@ -809,6 +814,7 @@
 			files = (
 				D9F1875C1826F67800FE27F1 /* main.m in Sources */,
 				D9F187601826F67800FE27F1 /* VPNAppDelegate.m in Sources */,
+				D9F1889F18270FA800FE27F1 /* VPNWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

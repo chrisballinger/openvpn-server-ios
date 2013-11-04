@@ -37,7 +37,7 @@ VERIFYGPG=true
 
 # No need to change this since xcode build will only compile in the
 # necessary bits from the libraries we create
-ARCHS="i386 x86_64 armv7 armv7s arm64"
+ARCHS="i386"
 
 DEVELOPER=`xcode-select -print-path`
 
@@ -146,7 +146,7 @@ do
     mkdir -p ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/
     cp src/openvpn/libopenvpn.a ${INTERDIR}/${PLATFORM}${SDKVERSION}-${ARCH}.sdk/lib/libopenvpn.a
 
-	make clean
+	#make clean
 done
 
 ########################################
@@ -196,6 +196,6 @@ done
 
 echo "Building done."
 echo "Cleaning up..."
-rm -fr ${INTERDIR}
-rm -fr "${SRCDIR}/openvpn-${VERSION}"
+#rm -fr ${INTERDIR}
+#rm -fr "${SRCDIR}/openvpn-${VERSION}"
 echo "Done."
